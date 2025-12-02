@@ -1,0 +1,118 @@
+---
+addressing:
+  loopback.ipv6: 2001:db8:cafe::/48    # Routers are always debating stuff
+  loopback.prefix6: 128
+  p2p.ipv6: True
+
+groups:
+  core:
+    members: [ border1, border2, leaf1, leaf2, spine1, spine2]
+    module: [ bgp, vrf, evpn, vlan, vxlan ]
+  tenant1:
+    members: [ srv1, srv2 ]
+    device: frr
+  tenant2:
+    members: [ srv3, srv4 ]
+    device: frr
+
+module: [ bgp ]
+defaults.device: frr
+provider: clab
+
+vrfs:
+  tenant1:
+    evpn.transit_vni: True
+    links:
+    - srv1:
+      leaf1:
+      unnumbered: True
+    - srv1:
+      leaf2:
+      unnumbered: True
+    - srv2:
+      leaf1:
+      unnumbered: True
+    - srv2:
+      leaf2:
+      unnumbered: True
+  tenant2:
+    evpn.transit_vni: True
+    links:
+    - srv3:
+      border1:
+      unnumbered: True
+    - srv3:
+      border2:
+      unnumbered: True
+    - srv4:
+      border1:
+      unnumbered: True
+    - srv4:
+      border2:
+      unnumbered: True
+
+nodes:
+  border1:
+    bgp.as: 65201
+  border2:
+    bgp.as: 65202
+  leaf1:
+    bgp.as: 65101
+  leaf2:
+    bgp.as: 65102
+  spine1:
+    bgp.as: 65001
+  spine2:
+    bgp.as: 65002
+  srv1:
+    bgp.as: 64001
+  srv2:
+    bgp.as: 64002
+  srv3:
+    bgp.as: 64103
+  srv4:
+    bgp.as: 64104
+
+links:
+- border1:
+  spine1:
+  unnumbered: True
+- border1:
+  spine2:
+  unnumbered: True
+- border2:
+  spine1:
+  unnumbered: True
+- border2:
+  spine2:
+  unnumbered: True
+- leaf1:
+  spine1:
+  unnumbered: True
+- leaf1:
+  spine2:
+  unnumbered: True
+- leaf2:
+  spine1:
+  unnumbered: True
+- leaf2:
+  spine2:
+  unnumbered: True
+- spine1:
+  spine2:
+  unnumbered: True
+- spine1:
+  spine2:
+  unnumbered: True
+- srv3:
+  border1:
+  unnumbered: True
+- srv3:
+  border2:
+  unnumbered: True
+- srv4:
+  border1:
+  unnumbered: True
+- srv4:
+  border2:
+  unnumbered: True
