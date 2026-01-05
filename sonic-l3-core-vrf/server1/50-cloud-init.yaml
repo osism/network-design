@@ -1,0 +1,28 @@
+network:
+  dummy-devices:
+    loopback0:
+        addresses:
+        - 10.10.0.120/32
+        - 2001:db8:1000:0:10:10:0:120/128
+        mtu: 9100
+
+  ethernets:
+     ens18:
+        dhcp4: true
+     data1:
+        dhcp4: false
+        dhcp6: false
+        link-local:
+          - ipv6
+        match:
+          macaddress: bc:24:11:85:be:8d
+        set-name: data1
+     data2:
+        dhcp4: false
+        dhcp6: false
+        link-local:
+          - ipv6
+        match:
+          macaddress: bc:24:11:b3:c1:0b
+        set-name: data2
+  version: 2

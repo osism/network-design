@@ -12,3 +12,10 @@ TODOs:
 - work without IPv4 addresses on all interfaces
 - make spine use the same ASN without having to add an IGP?
 - create port-channel between spines?
+
+## sonic examples
+
+- sonic-l3-core-vrf
+
+Leaf/spine topology of physical sonic switches with servers connected in
+two different VRFs
